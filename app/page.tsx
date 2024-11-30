@@ -2,15 +2,12 @@ import Page from "@layouts/Page"
 import { getDatabase } from "@lib/notion"
 import { PostList } from "../components/PostList"
 import { NotionHeading } from "@components/NotionHeading"
-import { NotionText } from "@components/NotionText"
 import NextImage from "next/image"
 import Link from "next/link"
 
 async function Home() {
   if (process.env.POSTS_TABLE_ID == null) {
-    return {
-      notFound: true,
-    }
+    throw new Error("POSTS_TABLE_ID is not set")
   }
 
   const posts = await getDatabase(process.env.POSTS_TABLE_ID)

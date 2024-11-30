@@ -6,6 +6,10 @@ import {
 import { Client } from "@notionhq/client"
 import { ListBlock, PostProps } from "@lib/types"
 
+if (process.env.NOTION_API_TOKEN == null) {
+  throw new Error("NOTION_API_TOKEN is not set")
+}
+
 const notion = new Client({
   auth: process.env.NOTION_API_TOKEN,
 })

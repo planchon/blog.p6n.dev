@@ -6,6 +6,7 @@ import React from "react"
 import { ContinueReading } from "../components/ContinueReading"
 import { Divider } from "../components/Divider"
 import { cn } from "../utils"
+import { DefaultDeserializer } from "v8"
 
 export interface Props {
   post: PostProps

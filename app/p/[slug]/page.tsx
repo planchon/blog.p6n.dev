@@ -12,6 +12,15 @@ import { ListBlock } from "@lib/types"
 import { RenderBlock } from "@components/RenderBlock"
 import { NotionListBlock } from "@components/ListBlock"
 
+export const dynamicParams = true
+
+export async function generateStaticParams() {
+  const posts = await getDatabase(process.env.POSTS_TABLE_ID)
+  return posts.map((post) => ({
+    slug: post.properties.Slug.rich_text[0].plain_text,
+  }))
+}
+
 export async function Post(props: { params: Promise<{ slug: string }> }) {
   const slug = (await props.params).slug
 
