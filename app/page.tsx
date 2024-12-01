@@ -46,7 +46,6 @@ async function Home() {
               width={800}
               height={500}
               className="p-0 rounded-xl"
-              unoptimized={process.env.NODE_ENV !== "production"}
             />
           </div>
         </div>

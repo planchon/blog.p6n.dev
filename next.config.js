@@ -11,6 +11,11 @@ module.exports = {
         pathname: "/**",
       },
       {
+        hostname: "prod-files-secure.s3.us-west-2.amazonaws.com",
+        protocol: "https",
+        pathname: "/**",
+      },
+      {
         hostname: "user-images.githubusercontent.com",
         protocol: "https",
         pathname: "/**",
