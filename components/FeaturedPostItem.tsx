@@ -17,7 +17,7 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
 
   const author = post.properties.Authors.people[0]
   const category = post.properties.Category.select?.name
-  const featuredImage = post.properties.FeaturedImage.url
+  const featuredImage = post.properties.Image.files[0].file.url
   const authorExists = author != null && author.name != null
 
   return (
@@ -46,7 +46,7 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
           {post.properties.Page.title[0].plain_text}
         </h3>
 
-        <p className="text-lg text-gray-800 line-clamp-2">
+        <p className="text-md text-gray-800 line-clamp-2">
           <NotionText text={post.properties.Description.rich_text} noLinks />
         </p>
 

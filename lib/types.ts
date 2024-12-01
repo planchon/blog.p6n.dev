@@ -17,7 +17,7 @@ export interface PostItem {
   Featured: CheckboxPropertyValue
   Date: DatePropertyValue
   Authors: { people: PersonUser[] }
-  Image: URLPropertyValue
+  Image: { files: { file: { url: string } }[] }
   FeaturedImage: URLPropertyValue
   Description: RichTextPropertyValue
   Category: SelectPropertyValue

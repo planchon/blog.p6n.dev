@@ -1,17 +1,25 @@
+/** @type {import('next').NextConfig} */
 module.exports = {
   eslint: {
     ignoreDuringBuilds: true,
   },
   images: {
-    domains: [
-      "user-images.githubusercontent.com",
-      "og.railway.app",
-      "res.cloudinary.com",
-      "fly.io",
-
-      // Images from Notion
-      "s3.us-west-2.amazonaws.com",
-      "prod-files-secure.s3.us-west-2.amazonaws.com",
+    remotePatterns: [
+      {
+        hostname: "s3-us-west-2.amazonaws.com",
+        protocol: "https",
+        pathname: "/**",
+      },
+      {
+        hostname: "user-images.githubusercontent.com",
+        protocol: "https",
+        pathname: "/**",
+      },
+      {
+        hostname: "fly.io",
+        protocol: "https",
+        pathname: "/**",
+      },
     ],
   },
 }

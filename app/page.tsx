@@ -13,6 +13,7 @@ async function Home() {
   const posts = await getDatabase(process.env.POSTS_TABLE_ID)
 
   const lastPost = posts[posts.length - 1]
+  console.log(lastPost)
 
   return (
     <Page>
@@ -21,6 +22,7 @@ async function Home() {
           <div className="w-full flex flex-col justify-between">
             <div>
               <NotionHeading
+                link={`/p/${lastPost.properties.Slug.rich_text[0].plain_text}`}
                 type="heading_1"
                 text={lastPost.properties.Page.title}
               />
@@ -39,7 +41,7 @@ async function Home() {
           </div>
           <div className="w-full">
             <NextImage
-              src={lastPost.properties.Image.url}
+              src={lastPost.properties.Image.files[0].file.url}
               alt={lastPost.properties.Page.title[0].plain_text}
               width={800}
               height={500}

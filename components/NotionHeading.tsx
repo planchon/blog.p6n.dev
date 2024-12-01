@@ -32,13 +32,16 @@ const headingConfig: Record<HeadingTypes, HeadingConfig> = {
 interface Props {
   type: HeadingTypes
   text: RichText[]
+  link?: string
 }
-export const NotionHeading: React.FC<Props> = ({ type, text }) => {
+export const NotionHeading: React.FC<Props> = ({ type, text, link }) => {
   const id = convertHeadingToId(text)
   const config = headingConfig[type]
 
+  const href = link ?? `#${id}`
+
   return (
-    <Link href={`#${id}`} className="relative">
+    <Link href={href} className="relative">
       {/* Link to something that is slightly above the actual heading to leave some padding */}
       <span
         id={id}
