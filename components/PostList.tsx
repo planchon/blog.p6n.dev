@@ -20,7 +20,7 @@ export const PostList: React.FC<{
     <>
       <div className="px-5 md:px-8">
         <div className="max-w-6xl mx-auto mb-24">
-          {featuredPosts.length >= 3 && (
+          {featuredPosts.length >= 2 && (
             <>
               <div className="mb-6">
                 <h2 className="text-xl font-heading">
