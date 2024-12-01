@@ -53,10 +53,12 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
         <div className="flex items-center gap-3 mt-6">
           {authorExists && (
             <>
-              <img
+              <Image
                 src={author.avatar_url}
                 alt={`Avatar of ${author.name}`}
-                className="w-6 h-6 rounded-full overflow-hidden"
+                className="rounded-full overflow-hidden"
+                width={24}
+                height={24}
               />
               <span className="font-medium text-sm text-gray-500">
                 {author.name}
