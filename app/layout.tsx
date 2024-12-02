@@ -4,7 +4,7 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
-  title: "p6n blog",
+  title: "p6n blog - software, startups, and life",
   abstract: "Paul Planchon personal blog about software, startups, and life.",
   description:
     "Paul Planchon personal blog about software, startups, and life.",
@@ -16,12 +16,12 @@ export const metadata: Metadata = {
     follow: true,
   },
   openGraph: {
-    title: "p6n blog",
+    title: "p6n blog - software, startups, and life",
     description:
       "Paul Planchon personal blog about software, startups, and life.",
     type: "website",
     url: "https://blog.p6n.dev",
-    siteName: "p6n blog",
+    siteName: "p6n blog - software, startups, and life",
   },
 }
 

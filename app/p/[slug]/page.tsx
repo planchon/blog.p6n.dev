@@ -12,6 +12,7 @@ import { ListBlock } from "@lib/types"
 import { RenderBlock } from "@components/RenderBlock"
 import { NotionListBlock } from "@components/ListBlock"
 import { Metadata } from "next"
+import { WithContext, BlogPosting } from "schema-dts"
 
 export const dynamicParams = true
 
@@ -56,10 +57,27 @@ export async function Post(props: { params: Promise<{ slug: string }> }) {
   const post = await getPost(slug)
   const blockProps = await mapDatabaseItemToPageProps(post.id)
 
+  const jsonLD: WithContext<BlogPosting> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "@id": `https://p6n.blog/p/${slug}`,
+    author: post.properties.Authors.people[0].name,
+    image: post.properties.Image.files[0].file.url,
+    datePublished: post.properties.Date.date.start,
+    dateModified: post.properties.Date.date.start,
+    description: post.properties.Description.rich_text[0].plain_text,
+    headline: post.properties.Page.title[0].plain_text,
+    url: `https://p6n.blog/p/${slug}`,
+  }
+
   const blocks = groupListBlocks(blockProps.blocks)
 
   return (
     <PostPage post={post} relatedPosts={[]}>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLD) }}
+      />
       {blocks.map((block) => {
         if ((block as ListBlock).items != null) {
           return <NotionListBlock key={block.id} block={block as ListBlock} />
