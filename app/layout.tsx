@@ -4,13 +4,50 @@ import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata: Metadata = {
-  title: "P6N Blog",
-  description: "P6N Blog",
+  title: "p6n blog",
+  abstract: "Paul Planchon personal blog about software, startups, and life.",
+  description:
+    "Paul Planchon personal blog about software, startups, and life.",
+  keywords: "software, startups, life",
+  authors: [{ name: "Paul Planchon", url: "https://p6n.dev" }],
+  creator: "Paul Planchon",
+  robots: {
+    index: true,
+    follow: true,
+  },
+  openGraph: {
+    title: "p6n blog",
+    description:
+      "Paul Planchon personal blog about software, startups, and life.",
+    type: "website",
+    url: "https://blog.p6n.dev",
+    siteName: "p6n blog",
+  },
 }
 
 const P6NBlog = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href="/icons/icon-180x180.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="/icons/icon-32x32.png"
+        />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="16x16"
+          href="/icons/icon-16x16.png"
+        />
+        <link rel="manifest" href="/manifest.json" />
+      </head>
       <body>
         <SpeedInsights />
         {children}

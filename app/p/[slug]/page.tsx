@@ -11,6 +11,7 @@ import { ListBlock } from "@lib/types"
 
 import { RenderBlock } from "@components/RenderBlock"
 import { NotionListBlock } from "@components/ListBlock"
+import { Metadata } from "next"
 
 export const dynamicParams = true
 
@@ -19,6 +20,34 @@ export async function generateStaticParams() {
   return posts.map((post) => ({
     slug: post.properties.Slug.rich_text[0].plain_text,
   }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string }
+}): Promise<Metadata> {
+  const post = await getPost(params.slug)
+  return {
+    title: post.properties.Page.title[0].plain_text,
+    description: post.properties.Description.rich_text[0].plain_text,
+    authors: post.properties.Authors.people.map((author) => ({
+      name: author.name,
+      url: author.avatar_url,
+    })),
+    creator: post.properties.Authors.people[0].name,
+    robots: {
+      index: true,
+      follow: true,
+    },
+    keywords: post.properties.Category.select.name,
+    abstract: post.properties.Description.rich_text[0].plain_text,
+    openGraph: {
+      title: post.properties.Page.title[0].plain_text,
+      description: post.properties.Description.rich_text[0].plain_text,
+      images: [post.properties.Image.files[0].file.url],
+    },
+  }
 }
 
 export async function Post(props: { params: Promise<{ slug: string }> }) {
