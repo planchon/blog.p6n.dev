@@ -67,9 +67,6 @@ module.exports = {
       colors: {
         transparent: "transparent",
         current: "currentColor",
-        black: colors.black,
-        white: colors.white,
-        ...customColors,
       },
       backgroundImage: {
         post: "linear-gradient(290.44deg, rgb(182 206 235 / 6%) 27.03%, rgba(204, 219, 235, 0.420833) 59.53%, rgb(215 185 238 / 30%) 86.77%)",
@@ -95,60 +92,7 @@ module.exports = {
         sm: ["14px", "21px"],
         xs: ["12px", "18px"],
       },
-      typography: (theme) => ({
-        DEFAULT: {
-          css: {
-            color: theme("colors.foreground"),
-
-            a: {
-              color: theme("colors.foreground"),
-              textDecoration: "none",
-
-              "&:hover": {
-                color: theme("colors.primary"),
-              },
-            },
-
-            "a code": {
-              color: theme("colors.white"),
-            },
-
-            p: {
-              color: theme("colors.gray.800"),
-
-              a: {
-                textDecoration: "underline",
-              },
-            },
-            li: {
-              a: {
-                textDecoration: "underline",
-              },
-            },
-            h1: {
-              color: theme("colors.pink.50"),
-            },
-            h2: {
-              color: theme("colors.foreground"),
-            },
-            h3: {
-              color: theme("colors.foreground"),
-            },
-            h4: {
-              color: theme("colors.foreground"),
-            },
-            img: {
-              borderRadius: "10px",
-            },
-            code: {
-              background: theme("colors.gray.800"),
-              color: theme("colors.gray.200"),
-              padding: "2px",
-              borderRadius: "2px",
-            },
-          },
-        },
-      }),
+      typography: (theme) => ({}),
     },
   },
   variants: {

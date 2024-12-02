@@ -25,7 +25,9 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
    *
    * The check below filters such items
    */
-  if (value.text != null && value.text.length === 0) {
+  // @ts-ignore: Current client version does not support `callout` but API does
+  if (value.text != null && value.text.length === 0 && type !== "callout") {
+    console.log(block)
     return null
   }
 
@@ -58,11 +60,9 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
     // @ts-ignore: Current client version does not support `callout` but API does
     case "callout": {
       const callout = (block as any).callout
+      console.log(block)
       return (
-        <div className="flex w-full p-4 my-8 rounded border border-transparent bg-blue-100">
-          {value.icon.emoji && (
-            <div className="text-yellow-500">{value.icon.emoji}</div>
-          )}
+        <div className="flex w-full p-4 my-8 rounded border border-transparent bg-gray-50">
           <div className="flex flex-col w-full">
             <div className="ml-4 text-foreground">
               <NotionText text={value.text} />
