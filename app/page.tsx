@@ -5,6 +5,8 @@ import { NotionHeading } from "@components/NotionHeading"
 import NextImage from "next/image"
 import Link from "next/link"
 
+export const revalidate = 3600
+
 async function Home() {
   if (process.env.POSTS_TABLE_ID == null) {
     throw new Error("POSTS_TABLE_ID is not set")

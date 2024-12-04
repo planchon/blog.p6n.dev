@@ -14,7 +14,9 @@ import { NotionListBlock } from "@components/ListBlock"
 import { Metadata } from "next"
 import { WithContext, BlogPosting } from "schema-dts"
 
-export const dynamicParams = true
+export const dynamicParams = false
+
+export const revalidate = 3600
 
 export async function generateStaticParams() {
   const posts = await getDatabase(process.env.POSTS_TABLE_ID)

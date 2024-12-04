@@ -4,6 +4,7 @@ module.exports = {
     ignoreDuringBuilds: true,
   },
   images: {
+    minimumCacheTTL: 3600,
     remotePatterns: [
       {
         hostname: "s3-us-west-2.amazonaws.com",
