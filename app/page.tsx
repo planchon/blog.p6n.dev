@@ -13,7 +13,6 @@ async function Home() {
   const posts = await getDatabase(process.env.POSTS_TABLE_ID)
 
   const lastPost = posts[posts.length - 1]
-  console.log(lastPost)
 
   return (
     <Page>
