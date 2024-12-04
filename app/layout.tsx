@@ -1,7 +1,7 @@
 import "@styles/globals.css"
 import { Metadata } from "next"
-import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import { CSPostHogProvider } from "./provider"
 
 export const metadata: Metadata = {
   title: "p6n blog - software, startups, and life",
@@ -28,31 +28,32 @@ export const metadata: Metadata = {
 const P6NBlog = ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="en">
-      <head>
-        <link
-          rel="apple-touch-icon"
-          sizes="180x180"
-          href="/icons/icon-180x180.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="32x32"
-          href="/icons/icon-32x32.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          sizes="16x16"
-          href="/icons/icon-16x16.png"
-        />
-        <link rel="manifest" href="/manifest.json" />
-      </head>
-      <body>
-        <SpeedInsights />
-        {children}
-        <Analytics />
-      </body>
+      <CSPostHogProvider>
+        <head>
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="/icons/icon-180x180.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/icons/icon-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/icons/icon-16x16.png"
+          />
+          <link rel="manifest" href="/manifest.json" />
+        </head>
+        <body>
+          <SpeedInsights />
+          {children}
+        </body>
+      </CSPostHogProvider>
     </html>
   )
 }

@@ -45,6 +45,11 @@ export async function generateMetadata({
     },
     keywords: post.properties.Category.select.name,
     abstract: post.properties.Description.rich_text[0].plain_text,
+    twitter: {
+      title: post.properties.Page.title[0].plain_text,
+      description: post.properties.Description.rich_text[0].plain_text,
+      images: [post.properties.Image.files[0].file.url],
+    },
     openGraph: {
       title: post.properties.Page.title[0].plain_text,
       description: post.properties.Description.rich_text[0].plain_text,
