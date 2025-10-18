@@ -1,6 +1,17 @@
+import { imageProxy } from "@lib/notion/image";
+
 export const NotionVideo: React.FC<{
-  src: string
-  blockId: string
-}> = ({ src, blockId }) => {
-  return <video src={src} controls autoPlay loop muted className="rounded-lg" />
-}
+	src: string;
+	blockId: string;
+}> = async ({ src, blockId }) => {
+	return (
+		<video
+			src={await imageProxy(src, `${blockId}.mp4`)}
+			controls
+			autoPlay
+			loop
+			muted
+			className="rounded-lg"
+		/>
+	);
+};

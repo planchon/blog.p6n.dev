@@ -29,6 +29,7 @@ yarn-error.log*
 .env.development.local
 .env.test.local
 .env.production.local
+.env
 
 # vercel
 .vercel
@@ -41,3 +42,4 @@ public/rss.xml
 # notion
 .blog_index_data
 .blog_index_data_previews
+.env
