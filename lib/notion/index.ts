@@ -35,13 +35,9 @@ export const getDatabase = async (
 			start_cursor: startCursor,
 		});
 
-		console.log(response.results);
-
 		results.push(...(response.results as unknown as PostProps[]));
 		startCursor = response.next_cursor ?? undefined;
 	} while (startCursor != null);
-
-	console.log("results", JSON.stringify(results[0], null, 2));
 
 	const filteredResults = results
 		.filter(
@@ -60,7 +56,7 @@ export const getDatabase = async (
 			return dateB.getTime() - dateA.getTime();
 		});
 
-	console.log("filteredResults", filteredResults.length);
+	console.log("Found", filteredResults.length, "posts");
 
 	return filteredResults;
 };

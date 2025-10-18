@@ -15,7 +15,9 @@ async function Home() {
 
 	const posts = await getDatabase(process.env.POSTS_TABLE_ID);
 
-	const lastPost = posts[posts.length - 1];
+	const featuredPosts =
+		posts.findLast((post) => post.properties.Featured.checkbox) ??
+		posts[posts.length - 1];
 
 	return (
 		<Page>
@@ -24,17 +26,17 @@ async function Home() {
 					<div className="w-full flex flex-col justify-between">
 						<div>
 							<NotionHeading
-								link={`/p/${lastPost.properties.Slug.rich_text[0].plain_text}`}
+								link={`/p/${featuredPosts.properties.Slug.rich_text[0].plain_text}`}
 								type="heading_1"
-								text={lastPost.properties.Page.title}
+								text={featuredPosts.properties.Page.title}
 							/>
 							<p className="text-gray-500">
-								{lastPost.properties.Description.rich_text[0].plain_text}
+								{featuredPosts.properties.Description.rich_text[0].plain_text}
 							</p>
 						</div>
 						<div className="">
 							<Link
-								href={`/p/${lastPost.properties.Slug.rich_text[0].plain_text}`}
+								href={`/p/${featuredPosts.properties.Slug.rich_text[0].plain_text}`}
 								className="font-bold"
 							>
 								Read more
@@ -45,11 +47,11 @@ async function Home() {
 						<NextImage
 							src={
 								await imageProxy(
-									lastPost.properties.Image.files[0].file.url,
-									lastPost.properties.Image.files[0].name,
+									featuredPosts.properties.Image.files[0].file.url,
+									featuredPosts.properties.Image.files[0].name,
 								)
 							}
-							alt={lastPost.properties.Page.title[0].plain_text}
+							alt={featuredPosts.properties.Page.title[0].plain_text}
 							width={800}
 							height={500}
 							className="p-0 rounded-md"
