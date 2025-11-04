@@ -8,6 +8,7 @@ import { getMediaProperties } from "@lib/notion";
 import type { Block } from "@notionhq/client/build/src/api-types";
 import { TwitterTweetEmbed } from "react-twitter-embed";
 import { extractYoutubeId } from "utils";
+import { Mermaid } from "./Mermaid";
 import { NotionVideo } from "./NotionVideo";
 
 interface Props {
@@ -100,6 +101,9 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
 		}
 		// @ts-expect-error: Current client version does not support `code` but API does
 		case "code": {
+			if (value.language === "mermaid") {
+				return <Mermaid chart={value.text[0].plain_text} />;
+			}
 			return (
 				<CodeBlock language={value.language} code={value.text[0].plain_text} />
 			);

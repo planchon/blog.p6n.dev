@@ -34,5 +34,6 @@ export const imageProxy = async (url: string, fileName: string) => {
 
 	// Public URL for Cloudflare R2 (format may vary based on your setup)
 	const publicUrl = `${process.env.CLOUDFLARE_R2_PUBLIC_BASE_URL}/${fileName}`;
+	console.log(publicUrl);
 	return publicUrl;
 };

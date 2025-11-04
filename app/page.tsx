@@ -1,5 +1,4 @@
 import { NotionHeading } from "@components/NotionHeading";
-import Page from "@layouts/Page";
 import { getDatabase } from "@lib/notion";
 import { imageProxy } from "@lib/notion/image";
 import NextImage from "next/image";
@@ -20,7 +19,7 @@ async function Home() {
 		posts[posts.length - 1];
 
 	return (
-		<Page>
+		<div>
 			<div className="px-5 md:px-8">
 				<div className="max-w-6xl mx-auto mb-24 grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
 					<div className="w-full flex flex-col justify-between">
@@ -43,7 +42,7 @@ async function Home() {
 							</Link>
 						</div>
 					</div>
-					<div className="w-full">
+					<div className="w-full flex items-center justify-center">
 						<NextImage
 							src={
 								await imageProxy(
@@ -54,13 +53,13 @@ async function Home() {
 							alt={featuredPosts.properties.Page.title[0].plain_text}
 							width={800}
 							height={500}
-							className="p-0 rounded-md"
+							className="rounded-md"
 						/>
 					</div>
 				</div>
 			</div>
 			<PostList posts={posts} />
-		</Page>
+		</div>
 	);
 }
 

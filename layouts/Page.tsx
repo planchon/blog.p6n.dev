@@ -1,22 +1,22 @@
-import React from "react"
-import Footer from "@components/Footer"
-import Nav from "@components/Nav"
+import Footer from "@components/Footer";
+import Nav from "@components/Nav";
+import type React from "react";
 export interface Props {
-  children?: React.ReactNode
+	children?: React.ReactNode;
 }
 
 const Page: React.FC<Props> = (props) => {
-  return (
-    <>
-      <Nav />
+	return (
+		<>
+			<Nav />
 
-      <div className="min-h-screen overflow-x-hidden relative">
-        {props.children}
-      </div>
+			<div className="min-h-screen overflow-x-hidden relative">
+				{props.children}
+			</div>
 
-      <Footer />
-    </>
-  )
-}
+			<Footer />
+		</>
+	);
+};
 
-export default Page
+export default Page;

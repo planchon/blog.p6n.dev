@@ -30,7 +30,8 @@ export async function generateMetadata({
 }: {
 	params: { slug: string };
 }): Promise<Metadata> {
-	const post = await getPost(params.slug);
+	const slug = (await params).slug;
+	const post = await getPost(slug);
 
 	const image = await imageProxy(
 		post.properties.Image.files[0].file.url,
@@ -65,6 +66,7 @@ export async function generateMetadata({
 }
 
 export async function Post(props: { params: Promise<{ slug: string }> }) {
+	console.log("post/props", props);
 	const slug = (await props.params).slug;
 
 	const post = await getPost(slug);
@@ -113,6 +115,8 @@ export async function getPost(slug: string) {
 	const posts = await getDatabase(process.env.POSTS_TABLE_ID, {
 		includeUnpublished: true,
 	});
+
+	console.log("psot/slug", posts, slug);
 
 	const post = posts.find((post) => {
 		return post.properties.Slug.rich_text[0].plain_text === slug;
