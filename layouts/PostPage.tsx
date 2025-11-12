@@ -1,4 +1,5 @@
 import { NotionText } from "@components/NotionText";
+import { imageProxy } from "@lib/notion/image";
 import type { PostProps } from "@lib/types";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -13,7 +14,11 @@ export interface Props {
   children?: React.ReactNode;
 }
 
-export const PostPage: React.FC<Props> = ({ post, relatedPosts, children }) => {
+export const PostPage: React.FC<Props> = async ({
+  post,
+  relatedPosts,
+  children,
+}) => {
   const author = post.properties.Authors.people[0];
   const authorExists = author != null && author.name != null;
 
@@ -31,14 +36,16 @@ export const PostPage: React.FC<Props> = ({ post, relatedPosts, children }) => {
           )}
         >
           <div className="flex items-center space-x-3 text-gray-500">
-            {authorExists && (
+            {authorExists && author?.avatar_url != null && (
               <>
                 <div className="flex items-center space-x-3">
                   <Image
                     alt={`Avatar of ${author?.name}`}
                     className="h-6 w-6 overflow-hidden rounded-full"
                     height={24}
-                    src={author?.avatar_url}
+                    src={
+                      await imageProxy(author?.avatar_url, `${author?.id}.jpg`)
+                    }
                     width={24}
                   />
                   <span>{author?.name}</span>
@@ -46,8 +53,10 @@ export const PostPage: React.FC<Props> = ({ post, relatedPosts, children }) => {
                 <Divider />
               </>
             )}
-            <time dateTime={post.properties.Date.date.start}>
-              {dayjs(post.properties.Date.date.start).format("MMM D, YYYY")}
+            <time dateTime={post.properties.Date.date?.start ?? ""}>
+              {dayjs(post.properties.Date.date?.start ?? "").format(
+                "MMM D, YYYY"
+              )}
             </time>
           </div>
 

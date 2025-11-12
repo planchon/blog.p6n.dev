@@ -164,7 +164,7 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
       // const tweetId = url.split("/").pop()
       const regex = /status\/(\d+)/gm;
       const matches = regex.exec(url);
-      const tweetId = matches[1];
+      const tweetId = matches?.[1];
 
       if (tweetId == null) return null;
 

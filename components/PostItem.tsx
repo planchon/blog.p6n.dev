@@ -1,63 +1,74 @@
-import Link from "@components/Link"
-import { PostProps } from "@lib/types"
-import dayjs from "dayjs"
-import React, { useMemo } from "react"
-import { Divider } from "./Divider"
-import { NotionText } from "./NotionText"
-import { PostCategory } from "./PostCategory"
+import Link from "@components/Link";
+import { imageProxy } from "@lib/notion/image";
+import type { PostProps } from "@lib/types";
+import dayjs from "dayjs";
+import Image from "next/image";
+import type React from "react";
+import { useMemo } from "react";
+import { Divider } from "./Divider";
+import { NotionText } from "./NotionText";
+import { PostCategory } from "./PostCategory";
 
-export interface Props {
-  post: PostProps
-}
+export type Props = {
+  post: PostProps;
+};
 
-const PostItem: React.FC<Props> = ({ post }) => {
+const PostItem: React.FC<Props> = async ({ post }) => {
   const formattedDate = useMemo(
     () =>
-      dayjs(new Date(post.properties.Date.date.start)).format("MMM D, YYYY"),
-    [post.properties.Date.date.start]
-  )
+      dayjs(new Date(post.properties.Date.date?.start ?? "")).format(
+        "MMM D, YYYY"
+      ),
+    [post.properties.Date.date?.start]
+  );
 
-  const author = post.properties.Authors.people[0]
-  const authorExists = author != null && author.name != null
-  const category = post.properties.Category.select?.name
+  const author = post.properties.Authors.people[0];
+  const authorExists = author != null && author.name != null;
+  const category = post.properties.Category.select?.name;
 
   return (
     <Link
+      className="group flex flex-col border-gray-100 border-b"
       href={`/p/${post.properties.Slug.rich_text[0].plain_text}`}
-      className="flex flex-col border-b border-gray-100 group"
     >
       {category != null && <PostCategory category={category} />}
 
       <div className="flex-grow">
-        <h4 className="font-bold text-lg mt-2 mb-1 group-hover:opacity-60 tracking-tight">
-          <NotionText text={post.properties.Page.title} noLinks />
+        <h4 className="mt-2 mb-1 font-bold text-lg tracking-tight group-hover:opacity-60">
+          <NotionText noLinks text={post.properties.Page.title} />
         </h4>
 
-        <p className="text-base text-gray-800 line-clamp-2">
-          <NotionText text={post.properties.Description.rich_text} noLinks />
+        <p className="line-clamp-2 text-base text-gray-800">
+          <NotionText noLinks text={post.properties.Description.rich_text} />
         </p>
       </div>
 
-      <div className="flex items-center gap-3 mt-6 mb-10">
+      <div className="mt-6 mb-10 flex items-center gap-3">
         {authorExists && (
           <>
-            <img
-              src={author.avatar_url}
-              alt={`Avatar of ${author.name}`}
-              className="w-6 h-6 rounded-full overflow-hidden"
-            />
-            <span className="font-medium text-sm text-gray-500">
+            {author.avatar_url != null ? (
+              <Image
+                alt={`Avatar of ${author.name}`}
+                className="h-6 w-6 overflow-hidden rounded-full"
+                height={24}
+                src={await imageProxy(author.avatar_url, `${author.id}.jpg`)}
+                width={24}
+              />
+            ) : (
+              <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-100" />
+            )}
+            <span className="font-medium text-gray-500 text-sm">
               {author.name}
             </span>
             <Divider />
           </>
         )}
-        <span className="font-medium text-sm text-gray-500">
+        <span className="font-medium text-gray-500 text-sm">
           {formattedDate}
         </span>
       </div>
     </Link>
-  )
-}
+  );
+};
 
-export default PostItem
+export default PostItem;

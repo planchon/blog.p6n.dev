@@ -19,6 +19,10 @@ export const dynamicParams = false;
 export const revalidate = 3600;
 
 export async function generateStaticParams() {
+  if (!process.env.POSTS_TABLE_ID) {
+    return [];
+  }
+
   const posts = await getDatabase(process.env.POSTS_TABLE_ID);
   return posts.map((post) => ({
     slug: post.properties.Slug.rich_text[0].plain_text,
@@ -32,6 +36,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const slug = (await params).slug;
   const post = await getPost(slug);
+
+  if (!post) {
+    return {
+      title: "Post not found",
+      description: "Post not found",
+    };
+  }
 
   const image = await imageProxy(
     post.properties.Image.files[0].file.url,
@@ -50,7 +61,7 @@ export async function generateMetadata({
       index: true,
       follow: true,
     },
-    keywords: post.properties.Category.select.name,
+    keywords: post.properties.Category.select?.name,
     abstract: post.properties.Description.rich_text[0].plain_text,
     twitter: {
       title: post.properties.Page.title[0].plain_text,
@@ -69,6 +80,11 @@ export async function Post(props: { params: Promise<{ slug: string }> }) {
   const slug = (await props.params).slug;
 
   const post = await getPost(slug);
+
+  if (!post) {
+    return <div>Post not found</div>;
+  }
+
   const blockProps = await mapDatabaseItemToPageProps(post.id);
 
   const jsonLD: WithContext<BlogPosting> = {
@@ -80,8 +96,8 @@ export async function Post(props: { params: Promise<{ slug: string }> }) {
       post.properties.Image.files[0].file.url,
       post.properties.Image.files[0].name
     ),
-    datePublished: post.properties.Date.date.start,
-    dateModified: post.properties.Date.date.start,
+    datePublished: post.properties.Date.date?.start,
+    dateModified: post.properties.Date.date?.start,
     description: post.properties.Description.rich_text[0].plain_text,
     headline: post.properties.Page.title[0].plain_text,
     url: `https://p6n.blog/p/${slug}`,
@@ -111,6 +127,10 @@ export async function Post(props: { params: Promise<{ slug: string }> }) {
 }
 
 export async function getPost(slug: string) {
+  if (!process.env.POSTS_TABLE_ID) {
+    return null;
+  }
+
   const posts = await getDatabase(process.env.POSTS_TABLE_ID, {
     includeUnpublished: true,
   });

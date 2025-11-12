@@ -1,17 +1,17 @@
 import type { ListBlock, PostProps } from "@lib/types";
 import { Client } from "@notionhq/client";
 import type {
-	Block,
-	ExternalFileWithCaption,
-	FileWithCaption,
+  Block,
+  ExternalFileWithCaption,
+  FileWithCaption,
 } from "@notionhq/client/build/src/api-types";
 
 if (process.env.NOTION_API_TOKEN == null) {
-	throw new Error("NOTION_API_TOKEN is not set");
+  throw new Error("NOTION_API_TOKEN is not set");
 }
 
 const notion = new Client({
-	auth: process.env.NOTION_API_TOKEN,
+  auth: process.env.NOTION_API_TOKEN,
 });
 
 /**
@@ -20,185 +20,183 @@ const notion = new Client({
  * @returns A list of published posts from the collection
  */
 export const getDatabase = async (
-	databaseId: string,
-	{ includeUnpublished }: { includeUnpublished: boolean } = {
-		includeUnpublished: false,
-	},
+  databaseId: string,
+  { includeUnpublished }: { includeUnpublished: boolean } = {
+    includeUnpublished: false,
+  }
 ) => {
-	let startCursor: string | undefined;
-	const results: PostProps[] = [];
+  let startCursor: string | undefined;
+  const results: PostProps[] = [];
 
-	do {
-		const response = await notion.databases.query({
-			database_id: databaseId,
-			page_size: 100,
-			start_cursor: startCursor,
-		});
+  do {
+    const response = await notion.databases.query({
+      database_id: databaseId,
+      page_size: 100,
+      start_cursor: startCursor,
+    });
 
-		results.push(...(response.results as unknown as PostProps[]));
-		startCursor = response.next_cursor ?? undefined;
-	} while (startCursor != null);
+    results.push(...(response.results as unknown as PostProps[]));
+    startCursor = response.next_cursor ?? undefined;
+  } while (startCursor != null);
 
-	const filteredResults = results
-		.filter(
-			(r) =>
-				r.properties.Date.date?.start &&
-				r.properties.Description.rich_text.length > 0 &&
-				r.properties.Slug.rich_text.length > 0 &&
-				r.properties.Page.title.length > 0 &&
-				r.properties.Authors.people.length > 0 &&
-				r.properties.Published.checkbox,
-		)
-		.sort((a, b) => {
-			const dateA = new Date(a.properties.Date.date.start);
-			const dateB = new Date(b.properties.Date.date.start);
+  const filteredResults = results
+    .filter(
+      (r) =>
+        r.properties.Date.date?.start &&
+        r.properties.Description.rich_text.length > 0 &&
+        r.properties.Slug.rich_text.length > 0 &&
+        r.properties.Page.title.length > 0 &&
+        r.properties.Authors.people.length > 0 &&
+        r.properties.Published.checkbox
+    )
+    .sort((a, b) => {
+      const dateA = new Date(a.properties.Date.date?.start ?? "");
+      const dateB = new Date(b.properties.Date.date?.start ?? "");
 
-			return dateB.getTime() - dateA.getTime();
-		});
+      return dateB.getTime() - dateA.getTime();
+    });
 
-	console.log("Found", filteredResults.length, "posts");
+  console.log("Found", filteredResults.length, "posts");
 
-	return filteredResults;
+  return filteredResults;
 };
 
 export const getPage = async (pageId: string) => {
-	const response = await notion.pages.retrieve({ page_id: pageId });
+  const response = await notion.pages.retrieve({ page_id: pageId });
 
-	return response as unknown as PostProps;
+  return response as unknown as PostProps;
 };
 
 export const getBlocks = async (blockId: string) => {
-	let startCursor: string | undefined;
-	const results: Block[] = [];
+  let startCursor: string | undefined;
+  const results: Block[] = [];
 
-	do {
-		const response = await notion.blocks.children.list({
-			block_id: blockId,
-			page_size: 100,
-			start_cursor: startCursor,
-		});
+  do {
+    const response = await notion.blocks.children.list({
+      block_id: blockId,
+      page_size: 100,
+      start_cursor: startCursor,
+    });
 
-		results.push(...response.results);
-		startCursor = response.next_cursor ?? undefined;
-	} while (startCursor != null);
+    results.push(...response.results);
+    startCursor = response.next_cursor ?? undefined;
+  } while (startCursor != null);
 
-	return results;
+  return results;
 };
 
-export const mapDatabaseToPaths = (database: PostProps[]) => {
-	return database.map((item) => {
-		return { params: { slug: item.properties.Slug.rich_text[0].plain_text } };
-	});
-};
+export const mapDatabaseToPaths = (database: PostProps[]) =>
+  database.map((item) => ({
+    params: { slug: item.properties.Slug.rich_text[0].plain_text },
+  }));
 
 export const mapDatabaseItemToPageProps = async (id: string) => {
-	const page = await getPage(id);
-	const blocks = await getBlocks(id);
+  const page = await getPage(id);
+  const blocks = await getBlocks(id);
 
-	const parsedBlocks = [];
-	for (const block of blocks) {
-		// @ts-expect-error: Current client version does not support `column_list` but API does
-		if (block.type === "column_list") {
-			const typedBlock = block as unknown as Block;
-			const columnListChildren = await getBlocks(typedBlock.id);
-			const columnData = await Promise.all(
-				columnListChildren.map(async (c) => ({
-					...c,
-					column: await getBlocks(c.id),
-				})),
-			);
+  const parsedBlocks: any[] = [];
 
-			const parsedBlock = {
-				...typedBlock,
-				[typedBlock.type]: {
-					...typedBlock[typedBlock.type],
-					children: columnData,
-				},
-			};
+  for (const block of blocks) {
+    // @ts-expect-error: Current client version does not support `column_list` but API does
+    if (block.type === "column_list") {
+      const typedBlock = block as unknown as Block;
+      const columnListChildren = await getBlocks(typedBlock.id);
+      const columnData = await Promise.all(
+        columnListChildren.map(async (c) => ({
+          ...c,
+          column: await getBlocks(c.id),
+        }))
+      );
 
-			parsedBlocks.push(parsedBlock);
+      const parsedBlock = {
+        ...typedBlock,
+        [typedBlock.type]: {
+          ...typedBlock[typedBlock.type],
+          children: columnData,
+        },
+      };
 
-			continue;
-		}
+      parsedBlocks.push(parsedBlock);
 
-		if (block.has_children && !block[block.type].children) {
-			const childBlocks = await getBlocks(block.id);
+      continue;
+    }
 
-			const parsedBlock = {
-				...block,
-				[block.type]: {
-					...block[block.type],
-					children: childBlocks,
-				},
-			};
+    if (block.has_children && !block[block.type].children) {
+      const childBlocks = await getBlocks(block.id);
 
-			parsedBlocks.push(parsedBlock);
-			continue;
-		}
+      const parsedBlock = {
+        ...block,
+        [block.type]: {
+          ...block[block.type],
+          children: childBlocks,
+        },
+      };
 
-		parsedBlocks.push(block);
-	}
+      parsedBlocks.push(parsedBlock);
+      continue;
+    }
 
-	return { page, blocks: parsedBlocks };
+    parsedBlocks.push(block);
+  }
+
+  return { page, blocks: parsedBlocks };
 };
 
 export const getMediaProperties = (
-	value: FileWithCaption | ExternalFileWithCaption,
+  value: FileWithCaption | ExternalFileWithCaption
 ) => {
-	const source =
-		value.type === "external" ? value.external.url : value.file.url;
-	const caption =
-		value.caption && value.caption.length > 0
-			? value.caption[0].plain_text
-			: "";
+  const source =
+    value.type === "external" ? value.external.url : value.file.url;
+  const caption =
+    value.caption && value.caption.length > 0
+      ? value.caption[0].plain_text
+      : "";
 
-	return { source, caption };
+  return { source, caption };
 };
 
-export const getBlogLink = (slug: string) => {
-	return `/p/${slug}`;
-};
+export const getBlogLink = (slug: string) => `/p/${slug}`;
 
 export const getChangelogImageSrc = async (blockId: string) => {
-	const block = await notion.blocks.retrieve({ block_id: blockId });
+  const block = await notion.blocks.retrieve({ block_id: blockId });
 
-	if (block.type !== "image" && block.type !== "video") {
-		throw new Error("Block is not an image or video");
-	}
+  if (block.type !== "image" && block.type !== "video") {
+    throw new Error("Block is not an image or video");
+  }
 
-	const image = block[block.type] as FileWithCaption | ExternalFileWithCaption;
+  const image = block[block.type] as FileWithCaption | ExternalFileWithCaption;
 
-	if (image.type === "external") {
-		return image.external.url;
-	}
+  if (image.type === "external") {
+    return image.external.url;
+  }
 
-	return image.file.url;
+  return image.file.url;
 };
 
 export const groupListBlocks = (blocks: Block[]): (Block | ListBlock)[] => {
-	const updatedBlocks: Array<Block | ListBlock> = [];
-	let currList: ListBlock | null = null;
+  const updatedBlocks: Array<Block | ListBlock> = [];
+  let currList: ListBlock | null = null;
 
-	for (const b of blocks ?? []) {
-		if (b.type === "bulleted_list_item" || b.type === "numbered_list_item") {
-			if (currList == null) {
-				currList = {
-					id: b.id,
-					type: b.type === "bulleted_list_item" ? "ul" : "ol",
-					items: [],
-				};
-			}
+  for (const b of blocks ?? []) {
+    if (b.type === "bulleted_list_item" || b.type === "numbered_list_item") {
+      if (currList == null) {
+        currList = {
+          id: b.id,
+          type: b.type === "bulleted_list_item" ? "ul" : "ol",
+          items: [],
+        };
+      }
 
-			currList.items.push(b);
-		} else {
-			if (currList != null) {
-				updatedBlocks.push(currList);
-				currList = null;
-			}
+      currList.items.push(b);
+    } else {
+      if (currList != null) {
+        updatedBlocks.push(currList);
+        currList = null;
+      }
 
-			updatedBlocks.push(b);
-		}
-	}
+      updatedBlocks.push(b);
+    }
+  }
 
-	return updatedBlocks;
+  return updatedBlocks;
 };
