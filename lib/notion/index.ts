@@ -56,8 +56,6 @@ export const getDatabase = async (
       return dateB.getTime() - dateA.getTime();
     });
 
-  console.log("Found", filteredResults.length, "posts");
-
   return filteredResults;
 };
 

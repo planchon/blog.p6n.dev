@@ -21,8 +21,6 @@ export const NotionImage: React.FC<{
     newAlt = newAlt.replace(/size=(\d+),(\d+)/g, "");
   }
 
-  console.log(match);
-
   return (
     <div className="flex w-full items-center justify-center">
       <ImageZoom className="imageContainer max-w-[760px]">

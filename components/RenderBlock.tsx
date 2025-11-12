@@ -59,7 +59,6 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
     }
     // @ts-expect-error: Current client version does not support `callout` but API does
     case "callout": {
-      console.log("callout", block);
       const callout = (block as any).callout;
       const color_mapping = {
         gray_background: "bg-gray-50 border-gray-200 text-gray-800",
