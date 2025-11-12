@@ -1,25 +1,36 @@
-import { useTheme } from "next-themes";
-import { codeToHtml } from "shiki";
+"use client";
 
-const LIGHT_THEME = "github-light";
-const DARK_THEME = "github-dark-dimmed";
+import {
+  CodeBlockBody,
+  CodeBlockContent,
+  CodeBlockItem,
+  CodeBlock as NewCodeBlock,
+} from "./NewCode";
 
-export async function CodeBlock({
-	code,
-	language,
+export function CodeBlock({
+  code,
+  language,
 }: {
-	code: string;
-	language?: string;
+  code: string;
+  language?: string;
 }) {
-	const out = await codeToHtml(code, {
-		lang: language,
-		theme: LIGHT_THEME,
-	});
+  const data: { language: string; filename: string; code: string }[] = [
+    { language: language ?? "text", filename: "code.ts", code },
+  ];
 
-	return (
-		<div
-			dangerouslySetInnerHTML={{ __html: out }}
-			className="shiki-wrapper mb-6 text-sm"
-		/>
-	);
+  return (
+    <NewCodeBlock
+      className="mb-4 shadow-gray-200/30 shadow-md"
+      data={data}
+      defaultValue={data[0].language}
+    >
+      <CodeBlockBody>
+        {(item) => (
+          <CodeBlockItem key={item.language} value={item.language}>
+            <CodeBlockContent>{item.code}</CodeBlockContent>
+          </CodeBlockItem>
+        )}
+      </CodeBlockBody>
+    </NewCodeBlock>
+  );
 }
