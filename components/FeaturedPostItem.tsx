@@ -1,4 +1,5 @@
 import Link from "@components/Link";
+import { imageProxy } from "@lib/notion/image";
 import type { PostProps } from "@lib/types";
 import dayjs from "dayjs";
 import Image from "next/image";
@@ -8,7 +9,9 @@ import { Divider } from "./Divider";
 import { NotionText } from "./NotionText";
 import { PostCategory } from "./PostCategory";
 
-export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
+export const FeaturedPostItem: React.FC<{ post: PostProps }> = async ({
+  post,
+}) => {
   const formattedDate = useMemo(
     () =>
       dayjs(new Date(post.properties.Date.date?.start ?? "")).format(
@@ -28,13 +31,19 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
       href={`/p/${post.properties.Slug.rich_text[0].plain_text}`}
     >
       {featuredImage != null ? (
-        <div className="relative aspect-[2.25/1] w-full overflow-hidden rounded-xl border border-black border-opacity-10">
+        <div className="relative aspect-[1.75/1] w-full overflow-hidden rounded-xl border border-black border-opacity-10 shadow-gray-200 shadow-md">
           <Image
             alt={post.properties.Page.title[0].plain_text}
             className="object-cover transition-transform group-hover:scale-[1.05]"
             fill
             priority
-            src={featuredImage}
+            src={
+              await imageProxy(
+                featuredImage,
+                post.properties.Image.files[0].name
+              )
+            }
+            unoptimized={process.env.NODE_ENV !== "production"}
           />
         </div>
       ) : (
@@ -53,13 +62,14 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = ({ post }) => {
         </p>
 
         <div className="mt-6 flex items-center gap-3">
-          {authorExists && (
+          {authorExists && author.avatar_url != null && (
             <>
               <Image
                 alt={`Avatar of ${author.name}`}
                 className="overflow-hidden rounded-full"
                 height={24}
-                src={author.avatar_url ?? ""}
+                src={await imageProxy(author.avatar_url, `${author.id}.jpg`)}
+                unoptimized={process.env.NODE_ENV !== "production"}
                 width={24}
               />
               <span className="font-medium text-gray-500 text-sm">

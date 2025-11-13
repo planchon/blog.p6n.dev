@@ -10,7 +10,7 @@ import type {
   URLPropertyValue,
 } from "@notionhq/client/build/src/api-types";
 
-export interface PostItem {
+export type PostItem = {
   Page: TitlePropertyValue;
   Slug: RichTextPropertyValue;
   Published: CheckboxPropertyValue;
@@ -21,14 +21,15 @@ export interface PostItem {
   FeaturedImage: URLPropertyValue;
   Description: RichTextPropertyValue;
   Category: SelectPropertyValue;
-}
+  homepage: CheckboxPropertyValue;
+};
 
 export interface PostProps extends Omit<Page, "properties"> {
   properties: PostItem;
 }
 
-export interface ListBlock {
+export type ListBlock = {
   id: string;
   type: string;
   items: Block[];
-}
+};

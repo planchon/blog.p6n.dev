@@ -4,7 +4,7 @@ module.exports = {
     minimumCacheTTL: 3600,
     remotePatterns: [
       {
-        hostname: "s3-us-west-2.amazonaws.com",
+        hostname: "s3.us-west-2.amazonaws.com",
         protocol: "https",
         pathname: "/**",
       },

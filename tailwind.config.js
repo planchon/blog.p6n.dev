@@ -1,5 +1,5 @@
 // eslint-disable-next-line
-const colors = require("tailwindcss/colors")
+const colors = require("tailwindcss/colors");
 
 const generateColorShades = (name) =>
   [50, ...Array.from({ length: 9 }).map((_, i) => (i + 1) * 100), 950].reduce(
@@ -8,19 +8,19 @@ const generateColorShades = (name) =>
       [k]: `var(--${name}-${k})`,
     }),
     {}
-  )
+  );
 
 const customColors = {
-  foreground: `var(--foreground)`,
-  background: `var(--background)`,
-  secondaryBg: `var(--secondaryBg)`,
+  foreground: "var(--foreground)",
+  background: "var(--background)",
+  secondaryBg: "var(--secondaryBg)",
   gray: generateColorShades("gray"),
   pink: generateColorShades("pink"),
   blue: generateColorShades("blue"),
   yellow: generateColorShades("yellow"),
   green: generateColorShades("green"),
   red: generateColorShades("red"),
-}
+};
 
 const fontStack = [
   "Fricolage",
@@ -37,7 +37,7 @@ const fontStack = [
   "Apple Color Emoji",
   "Segoe UI Emoji",
   "Segoe UI Symbol",
-].join(",")
+].join(",");
 
 const monoStack = [
   "Fragment Mono",
@@ -48,10 +48,11 @@ const monoStack = [
   "Liberation Mono",
   "Menlo",
   "monospace",
-].join(",")
+].join(",");
 
 module.exports = {
   content: [
+    "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
     "./layouts/**/*.{js,ts,jsx,tsx}",
@@ -70,8 +71,6 @@ module.exports = {
       },
       backgroundImage: {
         post: "linear-gradient(290.44deg, rgb(182 206 235 / 6%) 27.03%, rgba(204, 219, 235, 0.420833) 59.53%, rgb(215 185 238 / 30%) 86.77%)",
-        bottomCta:
-          "radial-gradient(80.92% 283.41% at 34.4% -121.22%, #269ACC 0%, #461B9F 46.86%, #830757 100%)",
       },
       fontSize: {
         // Headings
@@ -102,4 +101,4 @@ module.exports = {
     require("@tailwindcss/typography"),
     require("@tailwindcss/line-clamp"),
   ],
-}
+};
