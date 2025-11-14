@@ -28,7 +28,7 @@ const PostItem: React.FC<Props> = async ({ post }) => {
 
   return (
     <Link
-      className="group flex flex-col border-gray-100 border-b"
+      className="group flex flex-col border-gray-100 dark:border-gray-800 border-b"
       href={`/p/${post.properties.Slug.rich_text[0].plain_text}`}
     >
       {category != null && <PostCategory category={category} />}
@@ -38,7 +38,7 @@ const PostItem: React.FC<Props> = async ({ post }) => {
           <NotionText noLinks text={post.properties.Page.title} />
         </h4>
 
-        <p className="line-clamp-2 text-base text-gray-800">
+        <p className="line-clamp-2 text-base text-gray-800 dark:text-gray-200">
           <NotionText noLinks text={post.properties.Description.rich_text} />
         </p>
       </div>
@@ -55,15 +55,15 @@ const PostItem: React.FC<Props> = async ({ post }) => {
                 width={24}
               />
             ) : (
-              <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-100" />
+              <div className="h-6 w-6 overflow-hidden rounded-full bg-gray-100 dark:bg-gray-800" />
             )}
-            <span className="font-medium text-gray-500 text-sm">
+            <span className="font-medium text-gray-500 dark:text-gray-400 text-sm">
               {author.name}
             </span>
             <Divider />
           </>
         )}
-        <span className="font-medium text-gray-500 text-sm">
+        <span className="font-medium text-gray-500 dark:text-gray-400 text-sm">
           {formattedDate}
         </span>
       </div>

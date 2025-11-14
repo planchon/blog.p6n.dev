@@ -33,20 +33,20 @@ async function Home() {
                 text={featuredPosts.properties.Page.title}
                 type="heading_1"
               />
-              <p className="text-gray-500">
+              <p className="text-gray-500 dark:text-gray-400">
                 {featuredPosts.properties.Description.rich_text[0].plain_text}
               </p>
             </div>
             <div className="mt-4 md:mt-2">
               <Link
-                className="rounded-md border border-gray-500 border-opacity-30 px-2 py-1 font-bold transition-all duration-300 hover:shadow-gray-200 hover:shadow-md"
+                className="rounded-md border border-gray-500 border-opacity-30 px-2 py-1 font-bold transition-all duration-300 hover:shadow-gray-200 hover:shadow-md dark:border-gray-400 dark:border-opacity-30 dark:hover:shadow-gray-800"
                 href={`/p/${featuredPosts.properties.Slug.rich_text[0].plain_text}`}
               >
                 Read more
               </Link>
             </div>
           </div>
-          <div className="flex w-full items-center justify-center overflow-hidden rounded-md shadow-gray-400 shadow-lg">
+          <div className="flex w-full items-center justify-center overflow-hidden rounded-md shadow-gray-400 shadow-lg dark:shadow-gray-900">
             <NextImage
               alt={featuredPosts.properties.Page.title[0].plain_text}
               height={500}

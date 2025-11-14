@@ -34,7 +34,7 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
   switch (type) {
     case "paragraph": {
       return (
-        <p className="mb-4 text-gray-800 leading-8">
+        <p className="mb-4 text-gray-800 dark:text-gray-200 leading-8">
           <NotionText text={value.text} />
         </p>
       );
@@ -43,7 +43,7 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
     case "quote": {
       // const { source, caption } = getMediaProperties(value)
       return (
-        <blockquote className="my-8 flex flex-col border-gray-100 border-l-4 pl-4 text-gray-700 italic">
+        <blockquote className="my-8 flex flex-col border-gray-100 dark:border-gray-800 border-l-4 pl-4 text-gray-700 dark:text-gray-300 italic">
           <NotionText text={value.text} />
         </blockquote>
       );
@@ -61,22 +61,22 @@ export const RenderBlock: React.FC<Props> = ({ block }) => {
     case "callout": {
       const callout = (block as any).callout;
       const color_mapping = {
-        gray_background: "bg-gray-50 border-gray-200 text-gray-800",
-        blue_background: "bg-blue-50 border-blue-200 text-blue-800",
-        green_background: "bg-green-50 border-green-200 text-green-800",
-        yellow_background: "bg-yellow-50 border-yellow-200 text-yellow-800",
-        red_background: "bg-red-50 border-red-200 text-red-800",
-        purple_background: "bg-purple-50 border-purple-200 text-purple-800",
-        orange_background: "bg-orange-50 border-orange-200 text-orange-800",
-        pink_background: "bg-pink-50 border-pink-200 text-pink-800",
-        brown_background: "bg-brown-50 border-brown-200 text-brown-800",
+        gray_background: "bg-gray-50 dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-200",
+        blue_background: "bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-800 text-blue-800 dark:text-blue-200",
+        green_background: "bg-green-50 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-200",
+        yellow_background: "bg-yellow-50 dark:bg-yellow-900/30 border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200",
+        red_background: "bg-red-50 dark:bg-red-900/30 border-red-200 dark:border-red-800 text-red-800 dark:text-red-200",
+        purple_background: "bg-purple-50 dark:bg-purple-900/30 border-purple-200 dark:border-purple-800 text-purple-800 dark:text-purple-200",
+        orange_background: "bg-orange-50 dark:bg-orange-900/30 border-orange-200 dark:border-orange-800 text-orange-800 dark:text-orange-200",
+        pink_background: "bg-pink-50 dark:bg-pink-900/30 border-pink-200 dark:border-pink-800 text-pink-800 dark:text-pink-200",
+        brown_background: "bg-brown-50 dark:bg-brown-900/30 border-brown-200 dark:border-brown-800 text-brown-800 dark:text-brown-200",
       };
 
       const bg_color = color_mapping[callout.color];
       return (
         <div
           className={cn(
-            "my-8 flex w-full rounded-lg border p-4 shadow-gray-200/50 shadow-md",
+            "my-8 flex w-full rounded-lg border p-4 shadow-gray-200/50 dark:shadow-gray-900/50 shadow-md",
             bg_color
           )}
         >

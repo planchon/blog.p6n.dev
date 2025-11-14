@@ -33,7 +33,7 @@ const RenderTextContent: React.FC<{
   className?: string;
 }> = ({ isCode, content, className }) =>
   isCode ? (
-    <code className="whitespace-normal break-words rounded-md border border-gray-200 bg-gray-100 p-2 py-1 text-sm">
+    <code className="whitespace-normal break-words rounded-md border border-gray-200 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 p-2 py-1 text-sm">
       {content}
     </code>
   ) : (
@@ -73,7 +73,7 @@ export const NotionText: React.FC<{
             {text.link != null ? (
               <>
                 <Link
-                  className="underline hover:text-gray-950"
+                  className="underline hover:text-gray-950 dark:hover:text-gray-100"
                   href={text.link.url}
                 >
                   <RenderTextContent

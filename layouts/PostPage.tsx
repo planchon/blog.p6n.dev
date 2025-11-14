@@ -31,11 +31,11 @@ export const PostPage: React.FC<Props> = async ({
           className={cn(
             "mx-auto mt-24 mb-12 max-w-6xl",
             relatedPosts.length >= 2
-              ? "border-gray-100 border-b pb-32"
+              ? "border-gray-100 dark:border-gray-800 border-b pb-32"
               : "pb-12"
           )}
         >
-          <div className="flex items-center space-x-3 text-gray-500">
+          <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400">
             {authorExists && author?.avatar_url != null && (
               <>
                 <div className="flex items-center space-x-3">

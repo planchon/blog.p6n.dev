@@ -1,6 +1,7 @@
 import "@styles/globals.css";
 import Footer from "@components/Footer";
 import Nav from "@components/Nav";
+import { ThemeProvider } from "@components/ThemeProvider";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
@@ -28,7 +29,7 @@ export const metadata: Metadata = {
 };
 
 const P6NBlog = ({ children }: { children: React.ReactNode }) => (
-  <html lang="en">
+  <html lang="en" suppressHydrationWarning>
     <head>
       <link
         href="/icons/icon-180x180.png"
@@ -50,11 +51,13 @@ const P6NBlog = ({ children }: { children: React.ReactNode }) => (
       <link href="/manifest.json" rel="manifest" />
     </head>
     <body>
-      <Nav />
-      <SpeedInsights />
-      <Analytics />
-      <div className="relative min-h-screen overflow-x-hidden">{children}</div>
-      <Footer />
+      <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <Nav />
+        <SpeedInsights />
+        <Analytics />
+        <div className="relative min-h-screen overflow-x-hidden">{children}</div>
+        <Footer />
+      </ThemeProvider>
     </body>
   </html>
 );

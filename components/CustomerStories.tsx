@@ -20,7 +20,7 @@ export const CustomerStories: React.FC = () => {
       <header className="mx-auto mb-12 flex max-w-6xl items-center justify-between">
         <div>
           <h1 className="mb-3 font-heading text-[42px]">Customer Stories</h1>
-          <p className="text-gray-600 text-lg">
+          <p className="text-gray-600 dark:text-gray-400 text-lg">
             Learn how we keep the train going, on-time, and fire-free.
           </p>
         </div>
@@ -79,15 +79,15 @@ const CustomerStoryPostItem: React.FC<{
     <Wrapper
       {...(slug != null ? ({ href: slug } as any) : {})}
       className={cn(
-        "flex min-h-[288px] flex-col overflow-hidden rounded-tl-xl rounded-tr-[48px] rounded-br-xl rounded-bl-[32px] bg-gray-100 dark:bg-gray-50",
-        "grid grid-cols-3 border border-black border-opacity-5 dark:border-white dark:border-opacity-5",
-        slug != null ? "hover:bg-gray-200 dark:hover:bg-gray-100" : "",
+        "flex min-h-[288px] flex-col overflow-hidden rounded-tl-xl rounded-tr-[48px] rounded-br-xl rounded-bl-[32px] bg-gray-100 dark:bg-gray-800",
+        "grid grid-cols-3 border border-black border-opacity-5 dark:border-white dark:border-opacity-10",
+        slug != null ? "hover:bg-gray-200 dark:hover:bg-gray-700" : "",
         className
       )}
     >
       <div className="col-span-2 my-8 ml-8 flex flex-col justify-end">
         {drops != null && (
-          <p className="mb-auto max-w-max whitespace-nowrap rounded bg-background px-2 py-1 font-medium text-gray-400 text-sm dark:bg-gray-100">
+          <p className="mb-auto max-w-max whitespace-nowrap rounded bg-background dark:bg-gray-900 px-2 py-1 font-medium text-gray-400 dark:text-gray-500 text-sm">
             Available on {drops}
           </p>
         )}

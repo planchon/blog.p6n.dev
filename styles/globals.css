@@ -12,6 +12,104 @@
 
 /* Your own custom utilities */
 @layer base {
+  :root {
+    --foreground: 0 0% 0%;
+    --background: 0 0% 100%;
+    --secondaryBg: 0 0% 98%;
+
+    /* Gray shades */
+    --gray-50: 0 0% 98%;
+    --gray-100: 0 0% 96%;
+    --gray-200: 0 0% 90%;
+    --gray-300: 0 0% 83%;
+    --gray-400: 0 0% 64%;
+    --gray-500: 0 0% 45%;
+    --gray-600: 0 0% 32%;
+    --gray-700: 0 0% 25%;
+    --gray-800: 0 0% 15%;
+    --gray-900: 0 0% 9%;
+    --gray-950: 0 0% 3%;
+
+    /* Color shades - using default Tailwind colors */
+    --pink-50: 327 73% 97%;
+    --pink-100: 326 78% 95%;
+    --pink-200: 326 85% 90%;
+    --pink-300: 327 87% 82%;
+    --pink-400: 328 85% 70%;
+    --pink-500: 330 81% 60%;
+    --pink-600: 333 71% 51%;
+    --pink-700: 335 78% 42%;
+    --pink-800: 336 74% 35%;
+    --pink-900: 336 69% 29%;
+    --pink-950: 336 84% 17%;
+
+    --blue-50: 214 100% 97%;
+    --blue-100: 214 95% 93%;
+    --blue-200: 213 97% 87%;
+    --blue-300: 212 96% 78%;
+    --blue-400: 213 94% 68%;
+    --blue-500: 217 91% 60%;
+    --blue-600: 221 83% 53%;
+    --blue-700: 224 76% 48%;
+    --blue-800: 226 71% 40%;
+    --blue-900: 224 64% 33%;
+    --blue-950: 226 57% 21%;
+
+    --yellow-50: 48 96% 97%;
+    --yellow-100: 48 96% 96%;
+    --yellow-200: 48 97% 88%;
+    --yellow-300: 49 94% 76%;
+    --yellow-400: 50 90% 64%;
+    --yellow-500: 50 98% 49%;
+    --yellow-600: 45 93% 47%;
+    --yellow-700: 39 92% 50%;
+    --yellow-800: 35 92% 50%;
+    --yellow-900: 31 92% 45%;
+    --yellow-950: 26 90% 37%;
+
+    --green-50: 138 76% 97%;
+    --green-100: 141 84% 93%;
+    --green-200: 141 79% 85%;
+    --green-300: 142 76% 36%;
+    --green-400: 142 71% 45%;
+    --green-500: 142 71% 45%;
+    --green-600: 142 76% 36%;
+    --green-700: 142 72% 29%;
+    --green-800: 143 64% 24%;
+    --green-900: 144 61% 20%;
+    --green-950: 145 80% 10%;
+
+    --red-50: 0 86% 97%;
+    --red-100: 0 93% 94%;
+    --red-200: 0 96% 89%;
+    --red-300: 0 94% 82%;
+    --red-400: 0 91% 71%;
+    --red-500: 0 84% 60%;
+    --red-600: 0 72% 51%;
+    --red-700: 0 74% 42%;
+    --red-800: 0 70% 35%;
+    --red-900: 0 63% 31%;
+    --red-950: 0 75% 15%;
+  }
+
+  .dark {
+    --foreground: 0 0% 98%;
+    --background: 0 0% 3%;
+    --secondaryBg: 0 0% 6%;
+
+    /* Gray shades - inverted for dark mode */
+    --gray-50: 0 0% 3%;
+    --gray-100: 0 0% 9%;
+    --gray-200: 0 0% 15%;
+    --gray-300: 0 0% 25%;
+    --gray-400: 0 0% 32%;
+    --gray-500: 0 0% 45%;
+    --gray-600: 0 0% 64%;
+    --gray-700: 0 0% 83%;
+    --gray-800: 0 0% 90%;
+    --gray-900: 0 0% 96%;
+    --gray-950: 0 0% 98%;
+  }
   @font-face {
     font-family: "Fragment Mono";
     src: url("/fonts/fragment-mono-regular.woff2") format("woff2");
@@ -59,6 +157,11 @@
     src: url("/fonts/mackinac-medium-italic.woff2") format("woff2");
     font-weight: 500;
     font-style: italic;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
   }
 }
 

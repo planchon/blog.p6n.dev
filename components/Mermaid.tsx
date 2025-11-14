@@ -2,12 +2,13 @@
 
 import { cn } from "@lib/utils";
 import type { MermaidConfig } from "mermaid";
+import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-const initializeMermaid = async (customConfig?: MermaidConfig) => {
+const initializeMermaid = async (customConfig?: MermaidConfig, theme?: string) => {
 	const defaultConfig: MermaidConfig = {
 		startOnLoad: false,
-		theme: "default",
+		theme: theme === "dark" ? "dark" : "default",
 		securityLevel: "strict",
 		fontFamily: "monospace",
 		suppressErrorRendering: true,
@@ -31,20 +32,28 @@ type MermaidProps = {
 };
 
 export const Mermaid = ({ chart, className, config }: MermaidProps) => {
+	const { theme } = useTheme();
+	const [mounted, setMounted] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 	const [isLoading, setIsLoading] = useState(true);
 	const [svgContent, setSvgContent] = useState<string>("");
 	const [lastValidSvg, setLastValidSvg] = useState<string>("");
 
+	useEffect(() => {
+		setMounted(true);
+	}, []);
+
 	// biome-ignore lint/correctness/useExhaustiveDependencies: "Required for Mermaid"
 	useEffect(() => {
+		if (!mounted) return;
+
 		const renderChart = async () => {
 			try {
 				setError(null);
 				setIsLoading(true);
 
-				// Initialize mermaid with optional custom config
-				const mermaid = await initializeMermaid(config);
+				// Initialize mermaid with optional custom config and current theme
+				const mermaid = await initializeMermaid(config, theme);
 
 				// Use a stable ID based on chart content hash and timestamp to ensure uniqueness
 				const chartHash = chart.split("").reduce((acc, char) => {
@@ -76,7 +85,7 @@ export const Mermaid = ({ chart, className, config }: MermaidProps) => {
 		};
 
 		renderChart();
-	}, [chart, config]);
+	}, [chart, config, theme, mounted]);
 
 	// Show loading only on initial load when we have no content
 	if (isLoading && !svgContent && !lastValidSvg) {
@@ -95,16 +104,16 @@ export const Mermaid = ({ chart, className, config }: MermaidProps) => {
 		return (
 			<div
 				className={cn(
-					"rounded-lg border border-red-200 bg-red-50 p-4",
+					"rounded-lg border border-red-200 dark:border-red-800 bg-red-50 dark:bg-red-900/30 p-4",
 					className,
 				)}
 			>
-				<p className="font-mono text-red-700 text-sm">Mermaid Error: {error}</p>
+				<p className="font-mono text-red-700 dark:text-red-300 text-sm">Mermaid Error: {error}</p>
 				<details className="mt-2">
-					<summary className="cursor-pointer text-red-600 text-xs">
+					<summary className="cursor-pointer text-red-600 dark:text-red-400 text-xs">
 						Show Code
 					</summary>
-					<pre className="mt-2 overflow-x-auto rounded bg-red-100 p-2 text-red-800 text-xs">
+					<pre className="mt-2 overflow-x-auto rounded bg-red-100 dark:bg-red-900/50 p-2 text-red-800 dark:text-red-200 text-xs">
 						{chart}
 					</pre>
 				</details>

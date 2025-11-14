@@ -27,11 +27,11 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = async ({
 
   return (
     <Link
-      className="group overflow-hidden rounded-xl bg-white p-2"
+      className="group overflow-hidden rounded-xl"
       href={`/p/${post.properties.Slug.rich_text[0].plain_text}`}
     >
       {featuredImage != null ? (
-        <div className="relative aspect-[1.75/1] w-full overflow-hidden rounded-xl border border-black border-opacity-10 shadow-gray-200 shadow-md">
+        <div className="relative aspect-[1.75/1] w-full overflow-hidden rounded-xl border border-black border-opacity-10 shadow-gray-200 shadow-md dark:border-white dark:border-opacity-20 dark:shadow-gray-900">
           <Image
             alt={post.properties.Page.title[0].plain_text}
             className="object-cover transition-transform group-hover:scale-[1.05]"
@@ -47,17 +47,17 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = async ({
           />
         </div>
       ) : (
-        <div className="aspect-[2/1] w-full rounded-xl bg-gray-100" />
+        <div className="aspect-[2/1] w-full rounded-xl bg-gray-100 dark:bg-gray-800" />
       )}
 
       <div className="mt-6">
         {category != null && <PostCategory category={category} />}
 
-        <h3 className="my-4 font-heading text-2xl text-gray-900">
+        <h3 className="my-4 font-heading text-2xl text-gray-900 dark:text-gray-100">
           {post.properties.Page.title[0].plain_text}
         </h3>
 
-        <p className="line-clamp-2 text-gray-800 text-md">
+        <p className="line-clamp-2 text-gray-800 text-md dark:text-gray-200">
           <NotionText noLinks text={post.properties.Description.rich_text} />
         </p>
 
@@ -72,14 +72,14 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = async ({
                 unoptimized={process.env.NODE_ENV !== "production"}
                 width={24}
               />
-              <span className="font-medium text-gray-500 text-sm">
+              <span className="font-medium text-gray-500 text-sm dark:text-gray-400">
                 {author.name}
               </span>
               <Divider />
             </>
           )}
 
-          <span className="font-medium text-gray-500 text-sm">
+          <span className="font-medium text-gray-500 text-sm dark:text-gray-400">
             {formattedDate}
           </span>
         </div>
