@@ -27,7 +27,7 @@ export const FeaturedPostItem: React.FC<{ post: PostProps }> = async ({
 
   return (
     <Link
-      className="group overflow-hidden rounded-xl"
+      className="group rounded-xl"
       href={`/p/${post.properties.Slug.rich_text[0].plain_text}`}
     >
       {featuredImage != null ? (
