@@ -1,36 +1,36 @@
-import Link from "@components/Link"
-import Logo from "@components/Logo"
-import React from "react"
+import Link from "@components/Link";
+import type React from "react";
 
-const Footer: React.FC = () => {
-  return (
-    <footer className="px-5 md:px-8 py-12 border-t border-gray-100 dark:border-gray-800">
-      <div className="grid grid-cols-2 sm:grid-cols-12 gap-8 sm:gap-4 lg:gap-16 max-w-6xl mx-auto">
-        <div className="hidden sm:flex col-span-3 lg:col-span-4 flex-col justify-between">
+const Footer: React.FC = () => (
+  <footer className="border-gray-100 border-t px-5 py-12 md:px-8 dark:border-gray-800">
+    <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-12 sm:gap-4 lg:gap-16">
+      <div className="col-span-3 hidden flex-col justify-between sm:flex lg:col-span-4">
+        <Link className="underline-offset-0" href="https://p6n.dev">
           p6n.dev
-          <Copyright />
-        </div>
+        </Link>
+        <Copyright />
       </div>
-    </footer>
-  )
-}
+    </div>
+  </footer>
+);
 
-export default Footer
+export default Footer;
 
 const FooterListLink: React.FC<{
-  href: string
-  children?: React.ReactNode
+  href: string;
+  children?: React.ReactNode;
 }> = ({ children, href }) => (
   <li>
-    <Link href={href} className="hover:text-foreground">
+    <Link className="hover:text-foreground" href={href}>
       {children}
     </Link>
   </li>
-)
+);
 
 const Copyright: React.FC = () => (
-  <div className="text-xs text-gray-500 dark:text-gray-400 w-full">
-    Copyright © {new Date().getFullYear()} p6n.dev <br />
+  <div className="w-full text-gray-500 text-xs dark:text-gray-400">
+    Copyright © {new Date().getFullYear()}{" "}
+    <Link href="https://p6n.dev">p6n.dev</Link> <br />
     All rights reserved.
   </div>
-)
+);

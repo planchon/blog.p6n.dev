@@ -3,6 +3,7 @@ import { imageProxy } from "@lib/notion/image";
 import type { PostProps } from "@lib/types";
 import dayjs from "dayjs";
 import Image from "next/image";
+import Link from "next/link";
 import type React from "react";
 import { ContinueReading } from "../components/ContinueReading";
 import { Divider } from "../components/Divider";
@@ -31,14 +32,17 @@ export const PostPage: React.FC<Props> = async ({
           className={cn(
             "mx-auto mt-24 mb-12 max-w-6xl",
             relatedPosts.length >= 2
-              ? "border-gray-100 dark:border-gray-800 border-b pb-32"
+              ? "border-gray-100 border-b pb-32 dark:border-gray-800"
               : "pb-12"
           )}
         >
           <div className="flex items-center space-x-3 text-gray-500 dark:text-gray-400">
             {authorExists && author?.avatar_url != null && (
               <>
-                <div className="flex items-center space-x-3">
+                <Link
+                  className="flex items-center space-x-3"
+                  href="https://p6n.dev"
+                >
                   <Image
                     alt={`Avatar of ${author?.name}`}
                     className="h-6 w-6 overflow-hidden rounded-full"
@@ -49,7 +53,7 @@ export const PostPage: React.FC<Props> = async ({
                     width={24}
                   />
                   <span>{author?.name}</span>
-                </div>
+                </Link>
                 <Divider />
               </>
             )}
