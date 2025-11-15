@@ -3,13 +3,11 @@ import type React from "react";
 
 const Footer: React.FC = () => (
   <footer className="border-gray-100 border-t px-5 py-12 md:px-8 dark:border-gray-800">
-    <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-12 sm:gap-4 lg:gap-16">
-      <div className="col-span-3 hidden flex-col justify-between sm:flex lg:col-span-4">
-        <Link className="underline-offset-0" href="https://p6n.dev">
-          p6n.dev
-        </Link>
-        <Copyright />
-      </div>
+    <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-start px-5 sm:px-4 xl:px-0">
+      <Link className="underline-offset-0" href="https://p6n.dev">
+        p6n.dev
+      </Link>
+      <Copyright />
     </div>
   </footer>
 );
