@@ -1,14 +1,14 @@
-import NextImage from "next/image"
-import ppl from "../public/apple-touch-icon.png"
+import NextImage from "next/image";
+import ppl from "../public/apple-touch-icon.png";
 
 const Logo = () => (
   <NextImage
-    src={ppl}
     alt="Logo"
-    width={40}
+    className="rounded-full border shadow-md"
     height={40}
-    className="rounded-full"
+    src={ppl}
+    width={40}
   />
-)
+);
 
-export default Logo
+export default Logo;

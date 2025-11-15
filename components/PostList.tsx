@@ -24,7 +24,7 @@ export const PostList: React.FC<{
             <>
               <div className="mb-6">
                 <h2 className="font-heading text-xl">
-                  Must read <span className="italic">billets</span>
+                  Other <span className="italic">billets</span> to read
                 </h2>
               </div>
               <div className="grid grid-cols-1 gap-x-8 gap-y-8 md:grid-cols-3 md:gap-y-12">

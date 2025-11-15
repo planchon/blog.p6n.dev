@@ -1,22 +1,21 @@
 import Footer from "@components/Footer";
 import Nav from "@components/Nav";
 import type React from "react";
-export interface Props {
-	children?: React.ReactNode;
-}
 
-const Page: React.FC<Props> = (props) => {
-	return (
-		<>
-			<Nav />
-
-			<div className="min-h-screen overflow-x-hidden relative">
-				{props.children}
-			</div>
-
-			<Footer />
-		</>
-	);
+export type Props = {
+  children?: React.ReactNode;
 };
+
+const Page: React.FC<Props> = (props) => (
+  <>
+    <Nav />
+
+    <div className="relative min-h-screen overflow-x-hidden">
+      {props.children}
+    </div>
+
+    <Footer />
+  </>
+);
 
 export default Page;
